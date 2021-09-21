@@ -1,29 +1,23 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/Users')
-const bycript  =require('bcrypt')
+const bcrypt = require('bcrypt')
+router.post('/register',async (req,res)=>{
+    try {
 
-router.post("/register",async(req,res)  => {
+        const salt = await bcrypt.genSalt(10)
+        const password = await bcrypt.hash(req.body.password,salt)
 
-    try{
-
-        const salt = await bycript.genSalt(10)
-        const password = await bycript.hash(req.body.password,salt)
-        
         const newUser = new User({
             username:req.body.username,
             email:req.body.email,
             password:password,
         })
-
-        await newUser.save()
-    }
-    catch(error){
+        await newUser.save()    
+    } catch (error) {
         res.status(500).send({'Error':error})
     }
-
-    res.status(200).json("registered successfully")
-
+    res.status(200).json("register successfull")
 })
 
 router.post('/login',async (req,res)=>{

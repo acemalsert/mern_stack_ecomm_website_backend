@@ -5,8 +5,7 @@ const helmet = require('helmet')
 const dotenv = require('dotenv')
 const cors = require('cors')
 
-const authRouter = require('./routes/auth')
-//const usersRouter = require('./routes/user')
+const authRouter = require('./routes/Auth')
 const productRouter  = require('./routes/Product')
 
 const app = express()
@@ -29,9 +28,7 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(helmet())
 app.use(morgan("dev"))
-//app.use(express.static('uploads'))
 app.use('/api/auth',authRouter)
-//app.use('/api/users',usersRouter)
 app.use('/api/products',productRouter)
 let port = process.env.PORT
 
